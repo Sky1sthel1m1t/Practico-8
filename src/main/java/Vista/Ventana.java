@@ -41,6 +41,23 @@ public class Ventana extends JFrame {
             }
         });
 
+        itemGuardar.addActionListener(e -> {
+            FileNameExtensionFilter xlsx = new FileNameExtensionFilter("Archivos excel(2007+)", "xlsx");
+
+            JFileChooser fc = new JFileChooser();
+            fc.setCurrentDirectory(new File("."));
+            fc.setAcceptAllFileFilterUsed(false);
+            fc.addChoosableFileFilter(xlsx);
+
+            int respuesta = fc.showSaveDialog(null);
+
+            if (respuesta == JFileChooser.APPROVE_OPTION) {
+                String path = fc.getSelectedFile().getPath();
+                path += ".xlsx";
+                panel.guardarArchivo(path);
+            }
+        });
+
         panel = new Panel(this.getSize());
 
         menu.add(itemGuardar);

@@ -3,7 +3,6 @@ package Modelo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class ProductoDAO extends AbstractDao<Producto> {
 
@@ -101,10 +100,10 @@ public class ProductoDAO extends AbstractDao<Producto> {
         Conexion conexion = Conexion.getInstance();
 
         String comando = "UPDATE producto SET " +
-                "nombre = " + "'" +  producto.nombre() + "'" + ", "+
-                "codigo = " + "'" + producto.codigo() + "'" + ", "+
-                "precio = " + producto.precio() + ", "+
-                "cantidad = " + producto.cantidad() + ", "+
+                "nombre = " + "'" + producto.nombre() + "'" + ", " +
+                "codigo = " + "'" + producto.codigo() + "'" + ", " +
+                "precio = " + producto.precio() + ", " +
+                "cantidad = " + producto.cantidad() + ", " +
                 "fechaVencimiento = " + "'" + producto.fechaVencimiento() + "'" + " " +
                 "WHERE id = " + producto.id();
 
@@ -115,8 +114,8 @@ public class ProductoDAO extends AbstractDao<Producto> {
         conexion.desconectar();
     }
 
-    public ArrayList<String> columnas(){
-        ArrayList<String> columnas = new ArrayList<>();
+    public Lista<String> columnas() {
+        Lista<String> columnas = new Lista<>();
 
         Conexion conexion = Conexion.getInstance();
         String comando = "DESC producto";
@@ -124,10 +123,10 @@ public class ProductoDAO extends AbstractDao<Producto> {
         try {
             conexion.conectar();
             Statement statement = conexion.getConexion().createStatement();
-            ResultSet rs = conexion.consulta(statement,comando);
-            while (rs.next()){
+            ResultSet rs = conexion.consulta(statement, comando);
+            while (rs.next()) {
                 String aux = rs.getString("Field");
-                columnas.add(aux);
+                columnas.adicionar(aux);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

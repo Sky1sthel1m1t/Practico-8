@@ -19,8 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -269,6 +268,52 @@ public class Panel extends JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error en la lectura del archivo");
             e.printStackTrace();
+        }
+    }
+
+    public void guardarArchivo(String path) {
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet hoja = wb.createSheet();
+        XSSFRow filaExcel;
+
+        Lista<Producto> productos = productoDAO.getProductos();
+
+        int numFila = 0;
+        int numcelda = 0;
+
+        filaExcel = hoja.createRow(numFila);
+        for (String s: productoDAO.columnas()) {
+            XSSFCell celda = filaExcel.createCell(numcelda);
+            celda.setCellValue(s);
+            numcelda++;
+        }
+
+        numFila++;
+
+        for (Producto p: productos) {
+            filaExcel = hoja.createRow(numFila);
+            String[] datos = p.getDatos();
+            numcelda = 0;
+
+            for (String s:datos) {
+                XSSFCell celda = filaExcel.createCell(numcelda);
+                celda.setCellValue(s);
+                numcelda++;
+            }
+
+            numFila++;
+        }
+
+        try {
+            FileOutputStream archivo = new FileOutputStream(path);
+            wb.write(archivo);
+            archivo.close();
+            JOptionPane.showMessageDialog(null,"Se guardo el archivo correctamente");
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "No se pudo crear el archivo");
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
