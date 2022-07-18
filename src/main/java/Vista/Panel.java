@@ -205,14 +205,9 @@ public class Panel extends JPanel {
 
                 while (celdas.hasNext()) {
                     celda = (XSSFCell) celdas.next();
-                    String aux = "";
 
-                    if (celda.getCellType() == CellType.STRING) {
-                        aux = celda.getStringCellValue();
-                    } else if (celda.getCellType() == CellType.NUMERIC) {
-                        DataFormatter dataFormatter = new DataFormatter();
-                        aux = dataFormatter.formatCellValue(celda);
-                    }
+                    DataFormatter dataFormatter = new DataFormatter();
+                    String aux = dataFormatter.formatCellValue(celda);
 
                     datos[numColumna] = aux;
                     numColumna++;
@@ -221,6 +216,7 @@ public class Panel extends JPanel {
                 if (numColumna != 6) {
                     continue;
                 }
+
                 datosTotales.adicionar(datos);
             }
 

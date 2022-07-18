@@ -11,7 +11,7 @@ public class ProductoDAO extends AbstractDao<Producto> {
         Conexion conexion = Conexion.getInstance();
         Producto producto = null;
 
-        String comando = "SELECT * FROM producto WHERE id = " + id;
+        String comando = "SELECT * FROM producto WHERE ID = " + id;
 
         try {
             conexion.conectar();
@@ -19,12 +19,12 @@ public class ProductoDAO extends AbstractDao<Producto> {
             ResultSet rs = conexion.consulta(statement, comando);
 
             if (rs.next()) {
-                producto = new Producto(rs.getInt("id"),
-                        rs.getString("nombre"),
-                        rs.getString("codigo"),
-                        rs.getDouble("precio"),
-                        rs.getInt("cantidad"),
-                        rs.getString("fechaVencimiento"));
+                producto = new Producto(rs.getInt("ID"),
+                        rs.getString("Nombre"),
+                        rs.getString("Codigo"),
+                        rs.getDouble("Precio"),
+                        rs.getInt("Cantidad"),
+                        rs.getString("FechaVencimiento"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -47,12 +47,12 @@ public class ProductoDAO extends AbstractDao<Producto> {
             ResultSet rs = conexion.consulta(statement, comando);
 
             while (rs.next()) {
-                Producto producto = new Producto(rs.getInt("id"),
-                        rs.getString("nombre"),
-                        rs.getString("codigo"),
-                        rs.getDouble("precio"),
-                        rs.getInt("cantidad"),
-                        rs.getString("fechaVencimiento"));
+                Producto producto = new Producto(rs.getInt("ID"),
+                        rs.getString("Nombre"),
+                        rs.getString("Codigo"),
+                        rs.getDouble("Precio"),
+                        rs.getInt("Cantidad"),
+                        rs.getString("FechaVencimiento"));
                 productos.adicionar(producto);
             }
         } catch (SQLException e) {
@@ -85,9 +85,8 @@ public class ProductoDAO extends AbstractDao<Producto> {
 
     public void eliminarProducto(int id) throws SQLException {
         Conexion conexion = Conexion.getInstance();
-        Producto producto = null;
 
-        String comando = "DELETE FROM producto WHERE id = " + id;
+        String comando = "DELETE FROM producto WHERE ID = " + id;
 
         conexion.conectar();
         Statement statement = conexion.getConexion().createStatement();
@@ -100,12 +99,12 @@ public class ProductoDAO extends AbstractDao<Producto> {
         Conexion conexion = Conexion.getInstance();
 
         String comando = "UPDATE producto SET " +
-                "nombre = " + "'" + producto.nombre() + "'" + ", " +
-                "codigo = " + "'" + producto.codigo() + "'" + ", " +
-                "precio = " + producto.precio() + ", " +
-                "cantidad = " + producto.cantidad() + ", " +
-                "fechaVencimiento = " + "'" + producto.fechaVencimiento() + "'" + " " +
-                "WHERE id = " + producto.id();
+                "Nombre = " + "'" + producto.nombre() + "'" + ", " +
+                "Codigo = " + "'" + producto.codigo() + "'" + ", " +
+                "Precio = " + producto.precio() + ", " +
+                "Cantidad = " + producto.cantidad() + ", " +
+                "FechaVencimiento = " + "'" + producto.fechaVencimiento() + "'" + " " +
+                "WHERE ID = " + producto.id();
 
         conexion.conectar();
         Statement statement = conexion.getConexion().createStatement();
