@@ -1,10 +1,15 @@
 package Modelo;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ProductoDAO extends AbstractDao<Producto> {
+
+    private Logger logger = LogManager.getRootLogger();
 
     @Override
     public Producto get(int id) {
@@ -78,6 +83,7 @@ public class ProductoDAO extends AbstractDao<Producto> {
         conexion.conectar();
         Statement statement = conexion.getConexion().createStatement();
         conexion.ejecutar(statement, comando);
+        logger.info("Se ha añadido un nuevo producto " + producto);
 
         conexion.desconectar();
 
@@ -91,6 +97,7 @@ public class ProductoDAO extends AbstractDao<Producto> {
         conexion.conectar();
         Statement statement = conexion.getConexion().createStatement();
         conexion.ejecutar(statement, comando);
+        logger.info("Se ha eliminado un producto");
 
         conexion.desconectar();
     }
@@ -109,6 +116,7 @@ public class ProductoDAO extends AbstractDao<Producto> {
         conexion.conectar();
         Statement statement = conexion.getConexion().createStatement();
         conexion.ejecutar(statement, comando);
+        logger.info("Se ha actualizado el producto " + producto);
 
         conexion.desconectar();
     }

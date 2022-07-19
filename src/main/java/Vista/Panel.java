@@ -187,6 +187,7 @@ public class Panel extends JPanel {
 
     public void leerArchivo(String path) {
         try {
+            logger.info("Se esta intentando leer el excel de ruta " + path);
             InputStream excel = new FileInputStream(path);
             XSSFWorkbook wb = new XSSFWorkbook(excel);
 
@@ -261,6 +262,7 @@ public class Panel extends JPanel {
             JOptionPane.showMessageDialog(null, "Se añadieron/actualizaron correctamente todos los productos " +
                     "que cumplian el formato");
             leerDatos();
+            logger.info("Se ha leido el archivo de ruta " + path);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error en la lectura del archivo");
             e.printStackTrace();
@@ -334,7 +336,7 @@ public class Panel extends JPanel {
 
         try {
             double auxPrecio = Double.parseDouble(precio);
-            if (auxPrecio < 0) {
+            if (auxPrecio <= 0) {
                 return false;
             }
         } catch (Exception e) {
@@ -343,7 +345,7 @@ public class Panel extends JPanel {
 
         try {
             int auxCantidad = Integer.parseInt(cantidad);
-            if (auxCantidad < 0) {
+            if (auxCantidad <= 0) {
                 return false;
             }
         } catch (Exception e) {
@@ -382,8 +384,8 @@ public class Panel extends JPanel {
 
         try {
             precio = Double.parseDouble(auxPrecio);
-            if (precio < 0) {
-                JOptionPane.showMessageDialog(null, "El precio no puede ser negativo");
+            if (precio <= 0) {
+                JOptionPane.showMessageDialog(null, "El precio no puede ser menor a 1");
                 return false;
             }
         } catch (Exception e) {
@@ -396,8 +398,8 @@ public class Panel extends JPanel {
 
         try {
             cantidad = Integer.parseInt(auxCantidad);
-            if (cantidad < 0) {
-                JOptionPane.showMessageDialog(null, "La cantidad no puede ser negativa");
+            if (cantidad <= 0) {
+                JOptionPane.showMessageDialog(null, "La cantidad no puede ser menor a 1");
                 return false;
             }
         } catch (Exception e) {
